@@ -1,4 +1,3 @@
-```yaml
 name: Build and deploy Aseprite
 
 on:
@@ -270,4 +269,3 @@ jobs:
             --title "Aseprite ${ASEPRITE_TAG}" \
             --notes-file release-notes.md \
             release/*.zip
-```
