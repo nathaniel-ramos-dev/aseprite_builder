@@ -123,19 +123,14 @@ jobs:
         run: |
           set -euo pipefail
 
-          if [[ "$RUNNER_OS" == "Windows" ]]; then
-            this_dir="$(cygpath "$GITHUB_WORKSPACE/aseprite")"
-          else
-            this_dir="$GITHUB_WORKSPACE/aseprite"
-          fi
-
-          skia_url="$(source "$this_dir/laf/misc/skia-url.sh" | xargs)"
+          skia_url="$(bash laf/misc/skia-url.sh Release | xargs)"
           skia_file="$(basename "$skia_url")"
 
-          echo "Downloading:"
+          echo "Downloading Skia:"
           echo "$skia_url"
 
           curl \
+            --ssl-revoke-best-effort \
             --fail \
             --location \
             --retry 5 \
@@ -145,7 +140,7 @@ jobs:
 
           mkdir -p skia
           unzip "$skia_file" -d skia
-
+          
       - name: Configure CMake
         shell: bash
         working-directory: aseprite
